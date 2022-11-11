@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  Image,
-  View,
-  StatusBar,
-  KeyboardAvoidingView,
-  TextInput,
-} from 'react-native';
+import {Image, View, StatusBar, KeyboardAvoidingView} from 'react-native';
 import Button from '../Components/Button/Button';
 import MainTitle from '../Components/Titles/MainTitle';
 import SecondaryText from '../Components/Titles/SecondaryTitle';
@@ -15,9 +9,11 @@ import Input from '../Components/Input/Input';
 
 const styles = require('../Styles/Styles');
 
-const Register = () => {
+const Register = ({navigation}) => {
   return (
-    <View style={styles.containerEnd}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={styles.containerEnd}>
       <StatusBar
         translucent
         backgroundColor="transparent"
@@ -27,7 +23,6 @@ const Register = () => {
       <View
         style={{
           ...styles.mainOnboarding,
-          paddingBottom: 60,
           justifyContent: 'space-between',
         }}>
         <View style={styles.inputGroup}>
@@ -41,14 +36,15 @@ const Register = () => {
           <Input input={'Confirm password'} />
         </View>
         <View style={styles.inputGroup}>
-          <Button label={'Register'} />
+          <Button label={'Register'} /*screenName={}*/ />
           <HighlightedText
             label={'Already have an account?'}
-            props={' Sign Up'}
+            props={' Log In'}
+            screenName={'Login'}
           />
         </View>
       </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 

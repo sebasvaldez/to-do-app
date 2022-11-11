@@ -51,6 +51,7 @@ module.exports = StyleSheet.create({
     fontWeight: 'bold',
     width: '90%',
   },
+
   inputGroup: {
     width: '95%',
     alignItems: 'center',
@@ -85,5 +86,12 @@ module.exports = StyleSheet.create({
     color: 'black',
     fontSize: 20,
     marginBottom: 15,
+  },
+  containerTextLink: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    alignContent: 'center',
+    padding: 10,
   },
 });

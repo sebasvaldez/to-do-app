@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  Image,
-  View,
-  StatusBar,
-  KeyboardAvoidingView,
-  TextInput,
-} from 'react-native';
+import {Image, View, StatusBar, KeyboardAvoidingView} from 'react-native';
 import Button from '../Components/Button/Button';
 import MainTitle from '../Components/Titles/MainTitle';
 import SecondaryText from '../Components/Titles/SecondaryTitle';
@@ -16,7 +10,9 @@ const styles = require('../Styles/Styles');
 
 const Login = () => {
   return (
-    <View style={styles.containerEnd}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={styles.containerEnd}>
       <StatusBar
         translucent
         backgroundColor="transparent"
@@ -26,7 +22,6 @@ const Login = () => {
       <View
         style={{
           ...styles.mainOnboarding,
-
           justifyContent: 'space-between',
         }}>
         <View style={styles.inputGroup}>
@@ -40,14 +35,15 @@ const Login = () => {
         </View>
         <SecondaryText label={'Forgot password'} />
         <View style={styles.inputGroup}>
-          <Button label={'Log in'} />
+          <Button label={'Log in'} /*screenName={}*/ />
           <HighlightedText
             label={'Don’t have an account?'}
             props={' Sign Up'}
+            screenName={'Register'}
           />
         </View>
       </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 

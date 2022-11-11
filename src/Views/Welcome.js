@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Image, StatusBar, Text, Pressable} from 'react-native';
+import {View, Image, StatusBar, KeyboardAvoidingView} from 'react-native';
 import elipse from '../Assets/elipse.png';
 import onboarding from '../Assets/onboarding.png';
 import Button from '../Components/Button/Button';
@@ -8,9 +8,11 @@ import MainText from '../Components/Texts/MainText';
 
 const styles = require('../Styles/Styles');
 
-const Welcome = ({navigation}) => {
+const Welcome = () => {
   return (
-    <View style={styles.containerEnd}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={styles.containerEnd}>
       <StatusBar
         translucent
         backgroundColor="transparent"
@@ -31,9 +33,9 @@ const Welcome = ({navigation}) => {
           <MainText label={'volutpat, tristique lacinia ut.'} />
           <MainText label={'Elementum non turpis nullam ipsum.'} />
         </View>
-        <Button label={'Get Started'} />
+        <Button label={'Get Started'} screenName={'Login'} />
       </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 
