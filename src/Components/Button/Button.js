@@ -11,7 +11,9 @@ const Button = textButton => {
     <Pressable style={styles.button}>
       <Text
         style={styles.buttonLabel}
-        onPress={() => navigation.navigate(textButton.screenName)}>
+        onPress={() => {
+          navigation.navigate(textButton.screenName);
+        }}>
         {textButton.label}
       </Text>
     </Pressable>

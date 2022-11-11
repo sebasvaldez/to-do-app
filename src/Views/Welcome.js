@@ -5,10 +5,12 @@ import onboarding from '../Assets/onboarding.png';
 import Button from '../Components/Button/Button';
 import MainTitle from '../Components/Titles/MainTitle';
 import MainText from '../Components/Texts/MainText';
-
 const styles = require('../Styles/Styles');
+import Reactotron from 'reactotron-react-native';
 
 const Welcome = () => {
+  Reactotron.log('hello rendering world');
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
