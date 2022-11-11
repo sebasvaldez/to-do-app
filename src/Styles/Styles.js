@@ -36,7 +36,7 @@ module.exports = StyleSheet.create({
 
   elipse: {
     position: 'absolute',
-    top: '-12%',
+    top: -100,
     left: '-24%',
   },
 

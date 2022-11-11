@@ -2,7 +2,7 @@ import React from 'react';
 import {Image, View, StatusBar, KeyboardAvoidingView} from 'react-native';
 import Button from '../Components/Button/Button';
 import MainTitle from '../Components/Titles/MainTitle';
-import SecondaryText from '../Components/Titles/SecondaryTitle';
+import SecondaryTitle from '../Components/Titles/SecondaryTitle';
 import HighlightedText from '../Components/Texts/HighlightedText';
 import Input from '../Components/Input/Input';
 
@@ -33,7 +33,12 @@ const Login = () => {
           <Input input={'Enter your e-mail'} />
           <Input input={'Confirm password'} />
         </View>
-        <SecondaryText label={'Forgot password'} />
+        <SecondaryTitle
+          label={'Forgot password'}
+          message={
+            'Hemos enviado por email las instrucciones para reestablecer su contrasea'
+          }
+        />
         <View style={styles.inputGroup}>
           <Button label={'Log in'} /*screenName={}*/ />
           <HighlightedText
