@@ -20,10 +20,8 @@ const Register = () => {
   const baseUrl = 'https://api-nodejs-todolist.herokuapp.com';
   const [validEmail, setValidEmail] = React.useState(false);
   const [validName, setValidName] = React.useState(false);
-
-  const handlePassword = text => {
-    setPassword(text);
-  };
+  const [validPassword, setValidPassword] = React.useState(false);
+  const [token, setToken] = React.useState('');
 
   const handleConfirmPassword = text => {
     setConfirmPassword(text);
@@ -42,11 +40,21 @@ const Register = () => {
   };
 
   const checkValidName = text => {
+    const nameRegex = /^[a-zA-Z_ ]*$/;
     setName(text);
-    if (text.length >= 7 && name !== '') {
+    if (nameRegex.test(text) && name !== '') {
       setValidName(true);
     } else {
       setValidName(false);
+    }
+  };
+
+  const checkValidPassword = text => {
+    setPassword(text);
+    if (password.length >= 7 && password !== '') {
+      setValidPassword(true);
+    } else {
+      setValidPassword(false);
     }
   };
 
@@ -75,7 +83,12 @@ const Register = () => {
   };
 
   const submit = () => {
-    if (validEmail && validName && password === confirmPassword) {
+    if (
+      validEmail &&
+      validName &&
+      validPassword &&
+      password === confirmPassword
+    ) {
       reactotron.log('empezando a enviar');
       axios
         .post(
@@ -94,12 +107,15 @@ const Register = () => {
         .then(response => {
           console.log(response);
           reactotron.log(response);
+          reactotron.log(response.data);
+          setToken(response.data.token);
+          reactotron.log(token);
+          showMessages('Datos enviados');
         })
         .catch(error => {
           console.log(error.response);
+          reactotron.log('error');
         });
-      reactotron.log('enviado');
-      showMessages('Datos enviados');
     } else {
       errorMsg('Datos invalidos');
     }
@@ -141,7 +157,7 @@ const Register = () => {
             }}
           />
           <Input
-            function={handlePassword}
+            function={checkValidPassword}
             security={true}
             input={'Enter your password'}
             onFocus={() => {
@@ -156,11 +172,7 @@ const Register = () => {
               showMessages('Las contraseñas deben coincidir');
             }}
           />
-          <Button
-            label={'Register'}
-            onFunction={submit}
-            screenName={'Register'}
-          />
+          <Button label={'Register'} onPress={submit} screenName={'Register'} />
           <HighlightedText
             label={'Already have an account?'}
             props={' Log In'}

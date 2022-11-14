@@ -40,7 +40,7 @@ const Welcome = () => {
           <MainText label={'volutpat, tristique lacinia ut.'} />
           <MainText label={'Elementum non turpis nullam ipsum.'} />
         </View>
-        <Button label={'Get Started'} onFunction={where} screenName={'Login'} />
+        <Button label={'Get Started'} onPress={where} screenName={'Login'} />
       </View>
     </KeyboardAvoidingView>
   );

@@ -5,18 +5,46 @@ import MainTitle from '../Components/Titles/MainTitle';
 import SecondaryTitle from '../Components/Titles/SecondaryTitle';
 import HighlightedText from '../Components/Texts/HighlightedText';
 import Input from '../Components/Input/Input';
+import reactotron from 'reactotron-react-native';
+import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {showMessage} from 'react-native-flash-message';
 
 const styles = require('../Styles/Styles');
 
 const Login = () => {
+  const baseUrl = 'https://api-nodejs-todolist.herokuapp.com';
   const [name, setName] = React.useState('');
   const [password, setPassword] = React.useState('');
+  const [token, setToken] = React.useState('');
 
   const handleName = text => {
     setName(text);
   };
+
   const handlePassword = text => {
     setPassword(text);
+  };
+
+  const showMessages = prop => {
+    showMessage({
+      message: prop,
+      type: 'info',
+      autoHide: true,
+      duration: 3000,
+      icon: 'info',
+      backgroundColor: '#31bfb5',
+      statusBarHeight: 30,
+    });
+  };
+
+  const storeData = async value => {
+    try {
+      const jsonValue = JSON.stringify(value);
+      await AsyncStorage.setItem('@storage_Key', jsonValue);
+    } catch (e) {
+      // saving error
+    }
   };
 
   const login = () => {
@@ -24,8 +52,8 @@ const Login = () => {
       .post(
         `${baseUrl}/user/login`,
         {
-          email: 'muh.nurali43@gmail.com',
-          password: '12345678',
+          email: name,
+          password: password,
         },
         {
           headers: {
@@ -36,11 +64,30 @@ const Login = () => {
       .then(response => {
         console.log(response);
         reactotron.log(response);
+        reactotron.log(response.data.token);
+        setToken(response.data.token);
+        storeData(token);
+        showMessages('Login successful');
+        getData();
       })
       .catch(error => {
         console.log(error.response);
       });
     console.log('enviado');
+  };
+
+  reactotron.log(token);
+
+  const getData = async () => {
+    try {
+      const value = await AsyncStorage.getItem('@storage_Key');
+      if (value !== null) {
+        // value previously stored
+        return console.log('storage ' + value);
+      }
+    } catch (e) {
+      // error reading value
+    }
   };
 
   return (
@@ -78,7 +125,7 @@ const Login = () => {
           }
         />
         <View style={styles.inputGroup}>
-          <Button label={'Log in'} onFunction={() => login()} />
+          <Button label={'Log in'} onPress={login} />
           <HighlightedText
             label={'Don’t have an account?'}
             props={' Sign Up'}
