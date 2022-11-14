@@ -36,10 +36,8 @@ const Register = () => {
     setEmail(text);
     if (emailRegex.test(text) && email !== '') {
       setValidEmail(true);
-      console.log('email valido');
     } else {
       setValidEmail(false);
-      console.log('email invalido');
     }
   };
 
@@ -47,11 +45,8 @@ const Register = () => {
     setName(text);
     if (text.length >= 7 && name !== '') {
       setValidName(true);
-      console.log('nombre valido');
-      return 'grey';
     } else {
       setValidName(false);
-      console.log('nombre invalido');
     }
   };
 
@@ -81,6 +76,7 @@ const Register = () => {
 
   const submit = () => {
     if (validEmail && validName && password === confirmPassword) {
+      reactotron.log('empezando a enviar');
       axios
         .post(
           `${baseUrl}/user/register`,
@@ -102,7 +98,8 @@ const Register = () => {
         .catch(error => {
           console.log(error.response);
         });
-      console.log('enviado');
+      reactotron.log('enviado');
+      showMessages('Datos enviados');
     } else {
       errorMsg('Datos invalidos');
     }
