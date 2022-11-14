@@ -2,14 +2,40 @@ import React from 'react';
 import {Image, View, StatusBar, KeyboardAvoidingView} from 'react-native';
 import Button from '../Components/Button/Button';
 import MainTitle from '../Components/Titles/MainTitle';
-import SecondaryText from '../Components/Titles/SecondaryTitle';
+import SecondaryTitle from '../Components/Titles/SecondaryTitle';
 import HighlightedText from '../Components/Texts/HighlightedText';
 import MainText from '../Components/Texts/MainText';
 import Input from '../Components/Input/Input';
+import axios from 'axios';
 
 const styles = require('../Styles/Styles');
 
-const Register = ({navigation}) => {
+const Register = () => {
+  const [name, setName] = React.useState('');
+  const [email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState('');
+  const [confirmPassword, setConfirmPassword] = React.useState('');
+  const baseUrl = 'https://api-nodejs-todolist.herokuapp.com';
+
+  const handleName = text => {
+    setName(text);
+  };
+
+  const handleEmail = text => {
+    setEmail(text);
+  };
+
+  const handlePassword = text => {
+    setPassword(text);
+  };
+  const handleConfirmPassword = text => {
+    setConfirmPassword(text);
+  };
+
+  const submit = () => {
+    console.log(name);
+  };
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -30,16 +56,26 @@ const Register = ({navigation}) => {
           <MainText label={'Lets help you meet up your tasks.'} />
         </View>
         <View style={styles.inputGroup}>
-          <Input input={'Enter your full name'} />
-          <Input input={'Enter your e-mail'} />
-          <Input input={'Enter your password'} />
-          <Input input={'Confirm password'} />
-        </View>
-        <View style={styles.inputGroup}>
-          <Button label={'Register'} /*screenName={}*/ />
+          <Input function={handleName} input={'Enter your full name'} />
+          <Input function={handleEmail} input={'Enter your e-mail'} />
+          <Input
+            function={handlePassword}
+            security={true}
+            input={'Enter your password'}
+          />
+          <Input
+            function={handleConfirmPassword}
+            security={true}
+            input={'Confirm password'}
+          />
+          <Button
+            label={'Register'}
+            runAction={submit}
+            screenName={'Register'}
+          />
           <HighlightedText
             label={'Already have an account?'}
-            props={' Log In'}
+            props={'Log In'}
             screenName={'Login'}
           />
         </View>

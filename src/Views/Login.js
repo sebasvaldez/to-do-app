@@ -9,6 +9,16 @@ import Input from '../Components/Input/Input';
 const styles = require('../Styles/Styles');
 
 const Login = () => {
+  const [name, setName] = React.useState('');
+  const [password, setPassword] = React.useState('');
+
+  const handleName = text => {
+    setName(text);
+  };
+  const handlePassword = text => {
+    setPassword(text);
+  };
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -30,8 +40,12 @@ const Login = () => {
             style={styles.imgTitle}
             source={require('../Assets/login.png')}
           />
-          <Input input={'Enter your e-mail'} />
-          <Input input={'Confirm password'} />
+          <Input input={'Enter your e-mail'} function={handleName} />
+          <Input
+            input={'Confirm password'}
+            security={true}
+            function={handlePassword}
+          />
         </View>
         <SecondaryTitle
           label={'Forgot password'}

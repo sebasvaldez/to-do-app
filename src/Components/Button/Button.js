@@ -12,6 +12,7 @@ const Button = textButton => {
       <Text
         style={styles.buttonLabel}
         onPress={() => {
+          textButton.runAction;
           navigation.navigate(textButton.screenName);
         }}>
         {textButton.label}
