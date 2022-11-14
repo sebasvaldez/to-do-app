@@ -18,14 +18,15 @@ const Login = () => {
   const [password, setPassword] = React.useState('');
   const [token, setToken] = React.useState('');
 
+  // seteamos los estados de los inputs
   const handleName = text => {
     setName(text);
   };
-
   const handlePassword = text => {
     setPassword(text);
   };
 
+  //mostrar mensaje
   const showMessages = prop => {
     showMessage({
       message: prop,
@@ -38,6 +39,8 @@ const Login = () => {
     });
   };
 
+  //local storage
+  //guardamos el token en el storage
   const storeData = async value => {
     try {
       const jsonValue = JSON.stringify(value);
@@ -46,7 +49,22 @@ const Login = () => {
       // saving error
     }
   };
+  //obtenemos el token del storage
+  const getData = async () => {
+    try {
+      const value = await AsyncStorage.getItem('@storage_Key');
+      if (value !== null) {
+        // value previously stored
+        return console.log('storage ' + value);
+      }
+    } catch (e) {
+      // error reading value
+    }
+  };
 
+  //funcion para loguear. Si el usuario existe, se guarda el token en el storage
+  //Deberia redireccionar a la pantalla de tareas
+  //Deberia mostrar un mensaje de error si el usuario no existe
   const login = () => {
     axios
       .post(
@@ -77,18 +95,6 @@ const Login = () => {
   };
 
   reactotron.log(token);
-
-  const getData = async () => {
-    try {
-      const value = await AsyncStorage.getItem('@storage_Key');
-      if (value !== null) {
-        // value previously stored
-        return console.log('storage ' + value);
-      }
-    } catch (e) {
-      // error reading value
-    }
-  };
 
   return (
     <KeyboardAvoidingView

@@ -23,10 +23,10 @@ const Register = () => {
   const [validPassword, setValidPassword] = React.useState(false);
   const [token, setToken] = React.useState('');
 
+  //seteamos los estados de los inputs luego de realizar la comprobacion
   const handleConfirmPassword = text => {
     setConfirmPassword(text);
   };
-
   const checkValidEmail = text => {
     const emailRegex =
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -38,7 +38,6 @@ const Register = () => {
       setValidEmail(false);
     }
   };
-
   const checkValidName = text => {
     const nameRegex = /^[a-zA-Z_ ]*$/;
     setName(text);
@@ -48,7 +47,6 @@ const Register = () => {
       setValidName(false);
     }
   };
-
   const checkValidPassword = text => {
     setPassword(text);
     if (password.length >= 7 && password !== '') {
@@ -58,6 +56,7 @@ const Register = () => {
     }
   };
 
+  //esto podria hacerse en una sola funcion que pase nombre y color
   const errorMsg = message => {
     showMessage({
       message: message,
@@ -69,7 +68,6 @@ const Register = () => {
       statusBarHeight: 30,
     });
   };
-
   const showMessages = prop => {
     showMessage({
       message: prop,
@@ -82,6 +80,7 @@ const Register = () => {
     });
   };
 
+  //submit del formulario. faltaria agregar una funcion que borre los inputs despues de enviado el formulario
   const submit = () => {
     if (
       validEmail &&
