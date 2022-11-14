@@ -1,4 +1,3 @@
-import React from 'react';
 import {Image, View, StatusBar, KeyboardAvoidingView} from 'react-native';
 import Button from '../Components/Button/Button';
 import MainTitle from '../Components/Titles/MainTitle';
@@ -7,6 +6,9 @@ import HighlightedText from '../Components/Texts/HighlightedText';
 import MainText from '../Components/Texts/MainText';
 import Input from '../Components/Input/Input';
 import axios from 'axios';
+import reactotron from 'reactotron-react-native';
+import React, {useEffect} from 'react';
+import {showMessage, hideMessage} from 'react-native-flash-message';
 
 const styles = require('../Styles/Styles');
 
@@ -16,24 +18,94 @@ const Register = () => {
   const [password, setPassword] = React.useState('');
   const [confirmPassword, setConfirmPassword] = React.useState('');
   const baseUrl = 'https://api-nodejs-todolist.herokuapp.com';
-
-  const handleName = text => {
-    setName(text);
-  };
-
-  const handleEmail = text => {
-    setEmail(text);
-  };
+  const [validEmail, setValidEmail] = React.useState(false);
+  const [validName, setValidName] = React.useState(false);
 
   const handlePassword = text => {
     setPassword(text);
   };
+
   const handleConfirmPassword = text => {
     setConfirmPassword(text);
   };
 
+  const checkValidEmail = text => {
+    const emailRegex =
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+    setEmail(text);
+    if (emailRegex.test(text) && email !== '') {
+      setValidEmail(true);
+      console.log('email valido');
+    } else {
+      setValidEmail(false);
+      console.log('email invalido');
+    }
+  };
+
+  const checkValidName = text => {
+    setName(text);
+    if (text.length >= 7 && name !== '') {
+      setValidName(true);
+      console.log('nombre valido');
+      return 'grey';
+    } else {
+      setValidName(false);
+      console.log('nombre invalido');
+    }
+  };
+
+  const errorMsg = message => {
+    showMessage({
+      message: message,
+      type: 'info',
+      autoHide: true,
+      duration: 3000,
+      icon: 'info',
+      backgroundColor: '#f12222',
+      statusBarHeight: 30,
+    });
+  };
+
+  const showMessages = prop => {
+    showMessage({
+      message: prop,
+      type: 'info',
+      autoHide: true,
+      duration: 3000,
+      icon: 'info',
+      backgroundColor: '#31bfb5',
+      statusBarHeight: 30,
+    });
+  };
+
   const submit = () => {
-    console.log(name);
+    if (validEmail && validName && password === confirmPassword) {
+      axios
+        .post(
+          `${baseUrl}/user/register`,
+          {
+            name: name,
+            email: email,
+            password: password,
+          },
+          {
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          },
+        )
+        .then(response => {
+          console.log(response);
+          reactotron.log(response);
+        })
+        .catch(error => {
+          console.log(error.response);
+        });
+      console.log('enviado');
+    } else {
+      errorMsg('Datos invalidos');
+    }
   };
 
   return (
@@ -56,26 +128,45 @@ const Register = () => {
           <MainText label={'Lets help you meet up your tasks.'} />
         </View>
         <View style={styles.inputGroup}>
-          <Input function={handleName} input={'Enter your full name'} />
-          <Input function={handleEmail} input={'Enter your e-mail'} />
+          <Input
+            function={checkValidName}
+            input={'Enter your full name'}
+            onFocus={() => {
+              showMessages('Debe ingresar un nombre de más de 7 caracteres');
+            }}
+          />
+          <Input
+            function={checkValidEmail}
+            input={'Enter your e-mail'}
+            keyboard={'email-address'}
+            onFocus={() => {
+              showMessages('Debe ingresar una dirección de correo válida');
+            }}
+          />
           <Input
             function={handlePassword}
             security={true}
             input={'Enter your password'}
+            onFocus={() => {
+              showMessages('Debe ingresar una contraseña segura');
+            }}
           />
           <Input
             function={handleConfirmPassword}
             security={true}
             input={'Confirm password'}
+            onFocus={() => {
+              showMessages('Las contraseñas deben coincidir');
+            }}
           />
           <Button
             label={'Register'}
-            runAction={submit}
+            onFunction={submit}
             screenName={'Register'}
           />
           <HighlightedText
             label={'Already have an account?'}
-            props={'Log In'}
+            props={' Log In'}
             screenName={'Login'}
           />
         </View>

@@ -7,9 +7,14 @@ import MainTitle from '../Components/Titles/MainTitle';
 import MainText from '../Components/Texts/MainText';
 const styles = require('../Styles/Styles');
 import Reactotron from 'reactotron-react-native';
+import {useNavigation} from '@react-navigation/native';
 
 const Welcome = () => {
   Reactotron.log('hello rendering world');
+  const navigation = useNavigation();
+  const where = () => {
+    navigation.navigate('Login');
+  };
 
   return (
     <KeyboardAvoidingView
@@ -35,7 +40,7 @@ const Welcome = () => {
           <MainText label={'volutpat, tristique lacinia ut.'} />
           <MainText label={'Elementum non turpis nullam ipsum.'} />
         </View>
-        <Button label={'Get Started'} screenName={'Login'} />
+        <Button label={'Get Started'} onFunction={where} screenName={'Login'} />
       </View>
     </KeyboardAvoidingView>
   );

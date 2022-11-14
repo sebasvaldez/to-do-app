@@ -19,6 +19,30 @@ const Login = () => {
     setPassword(text);
   };
 
+  const login = () => {
+    axios
+      .post(
+        `${baseUrl}/user/login`,
+        {
+          email: 'muh.nurali43@gmail.com',
+          password: '12345678',
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        },
+      )
+      .then(response => {
+        console.log(response);
+        reactotron.log(response);
+      })
+      .catch(error => {
+        console.log(error.response);
+      });
+    console.log('enviado');
+  };
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -54,7 +78,7 @@ const Login = () => {
           }
         />
         <View style={styles.inputGroup}>
-          <Button label={'Log in'} /*screenName={}*/ />
+          <Button label={'Log in'} onFunction={() => login()} />
           <HighlightedText
             label={'Don’t have an account?'}
             props={' Sign Up'}

@@ -11,6 +11,8 @@ function Input(text) {
       placeholderTextColor="grey"
       onChangeText={text.function}
       secureTextEntry={text.security}
+      keyboardType={text.keyboard}
+      onFocus={text.onFocus}
     />
   );
 }

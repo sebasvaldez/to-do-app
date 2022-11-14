@@ -1,19 +1,15 @@
 import React from 'react';
 import {Pressable, Text} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
 
 const styles = require('../../Styles/Styles');
 
 const Button = textButton => {
-  const navigation = useNavigation();
-
   return (
     <Pressable style={styles.button}>
       <Text
         style={styles.buttonLabel}
         onPress={() => {
-          textButton.runAction;
-          navigation.navigate(textButton.screenName);
+          textButton.onFunction();
         }}>
         {textButton.label}
       </Text>
