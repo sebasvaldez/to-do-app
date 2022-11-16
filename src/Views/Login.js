@@ -9,6 +9,7 @@ import reactotron from 'reactotron-react-native';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {showMessage} from 'react-native-flash-message';
+import {useNavigation} from '@react-navigation/native';
 
 const styles = require('../Styles/Styles');
 
@@ -16,7 +17,7 @@ const Login = () => {
   const baseUrl = 'https://api-nodejs-todolist.herokuapp.com';
   const [name, setName] = React.useState('');
   const [password, setPassword] = React.useState('');
-  const [token, setToken] = React.useState('');
+  const navigation = useNavigation();
 
   // seteamos los estados de los inputs
   const handleName = text => {
@@ -45,20 +46,9 @@ const Login = () => {
     try {
       const jsonValue = JSON.stringify(value);
       await AsyncStorage.setItem('@storage_Key', jsonValue);
+      reactotron.log('storedata' + value);
     } catch (e) {
       // saving error
-    }
-  };
-  //obtenemos el token del storage
-  const getData = async () => {
-    try {
-      const value = await AsyncStorage.getItem('@storage_Key');
-      if (value !== null) {
-        // value previously stored
-        return console.log('storage ' + value);
-      }
-    } catch (e) {
-      // error reading value
     }
   };
 
@@ -80,21 +70,16 @@ const Login = () => {
         },
       )
       .then(response => {
-        console.log(response);
-        reactotron.log(response);
         reactotron.log(response.data.token);
-        setToken(response.data.token);
-        storeData(token);
+        storeData(response.data.token);
         showMessages('Login successful');
-        getData();
+        navigation.navigate('UserHome');
       })
       .catch(error => {
         console.log(error.response);
       });
     console.log('enviado');
   };
-
-  reactotron.log(token);
 
   return (
     <KeyboardAvoidingView

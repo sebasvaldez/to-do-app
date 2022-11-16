@@ -6,44 +6,66 @@ import Button from '../Components/Button/Button';
 import MainTitle from '../Components/Titles/MainTitle';
 import MainText from '../Components/Texts/MainText';
 const styles = require('../Styles/Styles');
-import Reactotron from 'reactotron-react-native';
 import {useNavigation} from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Welcome = () => {
-  Reactotron.log('hello rendering world');
   const navigation = useNavigation();
+
   const where = () => {
     navigation.navigate('Login');
   };
 
-  return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      style={styles.containerEnd}>
-      <StatusBar
-        translucent
-        backgroundColor="transparent"
-        barStyle="dark-content"
-      />
-      <Image style={styles.elipse} source={elipse} />
-      <View
-        style={{
-          ...styles.mainOnboarding,
-          paddingBottom: 20,
-          justifyContent: 'space-around',
-        }}>
-        <View style={styles.center}>
-          <Image style={styles.imgTitle} source={onboarding} />
-          <MainTitle label={'Gets things done with TODo'} />
-          <MainText label={'Lorem ipsum dolor sit amet,'} />
-          <MainText label={'consectur adipiscing elit. Magna in'} />
-          <MainText label={'volutpat, tristique lacinia ut.'} />
-          <MainText label={'Elementum non turpis nullam ipsum.'} />
+  const [token, setToken] = React.useState('');
+
+  //obtenemos el token del storage
+  const getData = async () => {
+    try {
+      const value = await AsyncStorage.getItem('@storage_Key');
+      if (value !== null) {
+        // value previously stored
+        setToken(value);
+        return token;
+      }
+    } catch (e) {
+      // error reading value
+    }
+  };
+
+  getData();
+
+  if (token !== '') {
+    navigation.navigate('UserHome');
+  } else {
+    return (
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={styles.containerEnd}>
+        <StatusBar
+          translucent
+          backgroundColor="transparent"
+          barStyle="dark-content"
+        />
+        <Image style={styles.elipse} source={elipse} />
+        <View
+          style={{
+            ...styles.mainOnboarding,
+            paddingBottom: 20,
+            justifyContent: 'space-around',
+          }}>
+          <View style={styles.center}>
+            <Image style={styles.imgTitle} source={onboarding} />
+            <MainTitle label={'Gets things done with TODo'} />
+            <MainText label={'Lorem ipsum dolor sit amet,'} />
+            <MainText label={'consectur adipiscing elit. Magna in'} />
+            <MainText label={'volutpat, tristique lacinia ut.'} />
+            <MainText label={'Elementum non turpis nullam ipsum.'} />
+          </View>
+          <Button label={'Get Started'} onPress={where} screenName={'Login'} />
         </View>
-        <Button label={'Get Started'} onPress={where} screenName={'Login'} />
-      </View>
-    </KeyboardAvoidingView>
-  );
+      </KeyboardAvoidingView>
+    );
+  }
 };
 
 export default Welcome;
