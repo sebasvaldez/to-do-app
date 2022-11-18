@@ -27,11 +27,21 @@ const UserHome = () => {
     }
   };
 
+  const getAllTask =async () => {
+   await axios.get(`${baseUrl}/task`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  };
+
   getData();
+  getAllTask();
 
   // funcion para cerrar sesion
-  const logout = () => {
-    axios
+  const logout = async () => {
+    await axios
       .post(
         `${baseUrl}/user/logout`,
         {},
@@ -54,8 +64,6 @@ const UserHome = () => {
     navigation.navigate('Welcome');
   };
 
-  
-
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -75,10 +83,13 @@ const UserHome = () => {
         <View style={styles.center}>
           <MainTitle label={'Lista de Tareas'} />
         </View>
-        <Button label={'Add new Task'} onPress={()=>{
-          navigation.navigate('NewTask')
-        }} />
-        <Button label={'Log out'} onPress={logout}  />
+        <Button
+          label={'Add new Task'}
+          onPress={() => {
+            navigation.navigate('NewTask');
+          }}
+        />
+        <Button label={'Log out'} onPress={logout} />
       </View>
     </KeyboardAvoidingView>
   );
