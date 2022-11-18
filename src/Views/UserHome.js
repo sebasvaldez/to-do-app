@@ -55,6 +55,8 @@ const UserHome = () => {
     navigation.navigate('Welcome');
   };
 
+  
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -72,9 +74,12 @@ const UserHome = () => {
           justifyContent: 'space-around',
         }}>
         <View style={styles.center}>
-          <MainTitle label={'Al fin lograste entrar!!!'} />
+          <MainTitle label={'Lista de Tareas'} />
         </View>
-        <Button label={'Log out'} onPress={logout} />
+        <Button label={'Add new Task'} onPress={()=>{
+          navigation.navigate('NewTask')
+        }} />
+        <Button label={'Log out'} onPress={logout}  />
       </View>
     </KeyboardAvoidingView>
   );
