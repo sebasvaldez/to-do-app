@@ -4,7 +4,6 @@ import elipse from '../Assets/elipse.png';
 import Button from '../Components/Button/Button';
 import MainTitle from '../Components/Titles/MainTitle';
 const styles = require('../Styles/Styles');
-import Reactotron from 'reactotron-react-native';
 import {useNavigation} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';

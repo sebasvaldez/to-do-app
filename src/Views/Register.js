@@ -1,15 +1,14 @@
 import {Image, View, StatusBar, KeyboardAvoidingView} from 'react-native';
 import Button from '../Components/Button/Button';
 import MainTitle from '../Components/Titles/MainTitle';
-import SecondaryTitle from '../Components/Titles/SecondaryTitle';
 import HighlightedText from '../Components/Texts/HighlightedText';
 import MainText from '../Components/Texts/MainText';
 import Input from '../Components/Input/Input';
 import axios from 'axios';
 import reactotron from 'reactotron-react-native';
 import React, {useEffect} from 'react';
-import {showMessage, hideMessage} from 'react-native-flash-message';
-
+import {showMessage} from 'react-native-flash-message';
+import t from '../services/translate';
 const styles = require('../Styles/Styles');
 
 const Register = () => {
@@ -109,14 +108,14 @@ const Register = () => {
           reactotron.log(response.data);
           setToken(response.data.token);
           reactotron.log(token);
-          showMessages('Datos enviados');
+          showMessages(t('message.sended'));
         })
         .catch(error => {
           console.log(error.response);
           reactotron.log('error');
         });
     } else {
-      errorMsg('Datos invalidos');
+      errorMsg(t('message.invalid'));
     }
   };
 
@@ -136,50 +135,51 @@ const Register = () => {
           justifyContent: 'space-between',
         }}>
         <View style={styles.inputGroup}>
-          <MainTitle label={'Welcome Onboard!'} />
-          <MainText label={'Lets help you meet up your tasks.'} />
+          <MainTitle label={t('register.mainTitle')} />
+          <MainText label={t('register.mainText')} />
         </View>
         <View style={styles.inputGroup}>
           <Input
             function={checkValidName}
-            input={'Enter your full name'}
+            input={t('register.placeHolderName')}
             onFocus={() => {
-              showMessages('Debe ingresar un nombre de más de 7 caracteres');
+              showMessages(t('message.name'));
             }}
           />
           <Input
             function={checkValidEmail}
-            input={'Enter your e-mail'}
+            input={t('register.placeHolderEmail')}
             keyboard={'email-address'}
             onFocus={() => {
-              showMessages('Debe ingresar una dirección de correo válida');
+              showMessages(t('message.email'));
             }}
           />
           <Input
             function={checkValidPassword}
             security={true}
-            input={'Enter your password'}
+            input={t('register.placeHolderPassword')}
             onFocus={() => {
-              showMessages('Debe ingresar una contraseña segura');
+              showMessages(t('message.password'));
             }}
           />
           <Input
             function={handleConfirmPassword}
             security={true}
-            input={'Confirm password'}
+            input={t('register.placeHolderConfirmPassword')}
             onFocus={() => {
-              showMessages('Las contraseñas deben coincidir');
+              showMessages(t('message.confirmPassword'));
             }}
           />
-          <Button label={'Register'} onPress={submit} screenName={'Register'} />
+          <Button label={t('register.registerBtn')} onPress={submit} screenName={'Register'} />
           <HighlightedText
-            label={'Already have an account?'}
+            label={t('register.highlightedText')}
             props={' Log In'}
             screenName={'Login'}
           />
         </View>
       </View>
     </KeyboardAvoidingView>
+  
   );
 };
 

@@ -10,6 +10,7 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {showMessage} from 'react-native-flash-message';
 import {useNavigation} from '@react-navigation/native';
+import t from '../services/translate';
 
 const styles = require('../Styles/Styles');
 
@@ -72,7 +73,7 @@ const Login = () => {
       .then(response => {
         reactotron.log(response.data.token);
         storeData(response.data.token);
-        showMessages('Login successful');
+        showMessages(t('login.successful'));
         navigation.navigate('UserHome');
       })
       .catch(error => {
@@ -97,28 +98,26 @@ const Login = () => {
           justifyContent: 'space-between',
         }}>
         <View style={styles.inputGroup}>
-          <MainTitle label={'Welcome Back!'} />
+          <MainTitle label={t('login.mainTitle')} />
           <Image
             style={styles.imgTitle}
             source={require('../Assets/login.png')}
           />
-          <Input input={'Enter your e-mail'} function={handleName} />
+          <Input input={t('login.placeHolderEmail')} function={handleName} />
           <Input
-            input={'Confirm password'}
+            input={t('login.placeHolderPassword')}
             security={true}
             function={handlePassword}
           />
         </View>
         <SecondaryTitle
-          label={'Forgot password'}
-          message={
-            'Hemos enviado por email las instrucciones para reestablecer su contrasea'
-          }
+          label={t('login.forgotPassword')}
+          message={t('message.forgetPassword')}
         />
         <View style={styles.inputGroup}>
-          <Button label={'Log in'} onPress={login} />
+          <Button label={t('login.logIn')} onPress={login} />
           <HighlightedText
-            label={'Don’t have an account?'}
+            label={t('login.dontHaveAcc')}
             props={' Sign Up'}
             screenName={'Register'}
           />

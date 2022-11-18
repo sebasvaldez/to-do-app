@@ -8,6 +8,7 @@ import MainText from '../Components/Texts/MainText';
 const styles = require('../Styles/Styles');
 import {useNavigation} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import t from '../services/translate';
 
 const Welcome = () => {
   const navigation = useNavigation();
@@ -55,13 +56,13 @@ const Welcome = () => {
           }}>
           <View style={styles.center}>
             <Image style={styles.imgTitle} source={onboarding} />
-            <MainTitle label={'Gets things done with TODo'} />
-            <MainText label={'Lorem ipsum dolor sit amet,'} />
-            <MainText label={'consectur adipiscing elit. Magna in'} />
-            <MainText label={'volutpat, tristique lacinia ut.'} />
-            <MainText label={'Elementum non turpis nullam ipsum.'} />
+            <MainTitle label={t('welcome.mainTitle')} />
+            <MainText label={t('welcome.mainText1')} />
+            <MainText label={t('welcome.mainText2')} />
+            <MainText label={t('welcome.mainText3')} />
+            <MainText label={t('welcome.mainText4')} />
           </View>
-          <Button label={'Get Started'} onPress={where} screenName={'Login'} />
+          <Button label={t('welcome.btnStarted')} onPress={where} screenName={'Login'} />
         </View>
       </KeyboardAvoidingView>
     );
